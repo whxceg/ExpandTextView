@@ -17,6 +17,10 @@ import com.sam.lib.R;
 
 import java.lang.annotation.Retention;
 
+import static com.sam.lib.etv.ExpandTextView.State.STATE_DRAW;
+import static com.sam.lib.etv.ExpandTextView.State.STATE_INIT;
+import static com.sam.lib.etv.ExpandTextView.State.STATE_OPEN;
+import static com.sam.lib.etv.ExpandTextView.State.STATE_SHUT;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
@@ -30,7 +34,7 @@ public class ExpandTextView extends LinearLayout {
     private TextView mContent;
 
     private TextView mController;
-    private WrapBean mBean;
+    private IWrap mBean;
     private String mOpen = "收起";
     private String mShut = "展开";
 
@@ -82,16 +86,16 @@ public class ExpandTextView extends LinearLayout {
         mController.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (mBean.state) {
+                switch (mBean.getState()) {
                     case STATE_SHUT:
-                        mBean.state = STATE_OPEN;
+                        mBean.setState(STATE_OPEN);
                         if (mListener != null) {
                             mListener.onExpandClick(mBean);
                         }
                         drawText();
                         break;
                     case STATE_OPEN:
-                        mBean.state = STATE_SHUT;
+                        mBean.setState(STATE_SHUT);
                         if (mListener != null) {
                             mListener.onExpandClick(mBean);
                         }
@@ -106,7 +110,7 @@ public class ExpandTextView extends LinearLayout {
         });
     }
 
-    public void setText(WrapBean data) {
+    public void setText(IWrap data) {
         mBean = data;
         drawText();
     }
@@ -117,7 +121,7 @@ public class ExpandTextView extends LinearLayout {
     }
 
     private void drawText() {
-        switch (mBean.state) {
+        switch (mBean.getState()) {
             case STATE_INIT:
                 initDraw();
                 break;
@@ -142,33 +146,33 @@ public class ExpandTextView extends LinearLayout {
                     mContent.setMaxLines(mMaxLine);
                     mController.setVisibility(VISIBLE);
                     mController.setText(mShut);
-                    mBean.state = STATE_SHUT;
+                    mBean.setState(STATE_SHUT);
                 } else {
                     mController.setVisibility(GONE);
-                    mBean.state = STATE_DRAW;
+                    mBean.setState(STATE_DRAW);
                 }
                 mContent.getViewTreeObserver().removeOnPreDrawListener(this);
                 return true;
             }
         });
         mContent.setMaxLines(Integer.MAX_VALUE);
-        mContent.setText(mBean.content);
+        mContent.setText(mBean.getContnet());
     }
 
     private void normalDraw() {
         mController.setVisibility(View.GONE);
-        mContent.setText(mBean.content);
+        mContent.setText(mBean.getContnet());
     }
 
     private void shutDraw() {
-        mContent.setText(mBean.content);
+        mContent.setText(mBean.getContnet());
         mContent.setMaxLines(mMaxLine);
         mController.setVisibility(View.VISIBLE);
         mController.setText(mShut);
     }
 
     private void openDraw() {
-        mContent.setText(mBean.content);
+        mContent.setText(mBean.getContnet());
         mContent.setMaxLines(Integer.MAX_VALUE);
         mController.setVisibility(View.VISIBLE);
         mController.setText(mOpen);
@@ -181,19 +185,45 @@ public class ExpandTextView extends LinearLayout {
     }
 
     public interface OnExpandClickListener {
-        void onExpandClick(WrapBean bean);
+        void onExpandClick(IWrap bean);
     }
 
+    public interface IWrap {
 
-   public static class WrapBean<T> {
-        private @State
-        int state = STATE_INIT;
+        int mm = State.STATE_INIT;
+
+        String getContnet();
+
+        int getState();
+
+        void setState(@State int state);
+    }
+
+    public static class WrapBean<T> implements IWrap {
+
+        @State
+        private int state = STATE_INIT;
         private String content;
         private T data;
 
         public WrapBean(String content, T data) {
             this.content = content;
             this.data = data;
+        }
+
+        @Override
+        public String getContnet() {
+            return content;
+        }
+
+        @Override
+        public int getState() {
+            return state;
+        }
+
+        @Override
+        public void setState(int state) {
+            this.state = state;
         }
 
         public T getData() {
@@ -215,15 +245,13 @@ public class ExpandTextView extends LinearLayout {
     }
 
 
-    public final static int STATE_INIT = 1;
-    public final static int STATE_DRAW = 2;
-    public final static int STATE_SHUT = 3;
-    public final static int STATE_OPEN = 4;
-
     @IntDef({STATE_INIT, STATE_DRAW, STATE_SHUT, STATE_OPEN})
     @Retention(SOURCE)
-    @interface State {
-
+    public @interface State {
+        int STATE_INIT = 1;
+        int STATE_DRAW = 2;
+        int STATE_SHUT = 3;
+        int STATE_OPEN = 4;
     }
 
 
