@@ -185,7 +185,7 @@ public class ExpandTextView extends LinearLayout {
     }
 
 
-    static class WrapBean<T> {
+   public static class WrapBean<T> {
         private @State
         int state = STATE_INIT;
         private String content;
