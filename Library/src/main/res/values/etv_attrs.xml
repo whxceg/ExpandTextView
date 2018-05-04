@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ExpandTextView">
+        <attr name="etv_text_color" format="color" />
+        <attr name="etv_text_size" format="dimension" />
+        <attr name="etv_btn_color" format="color" />
+        <attr name="etv_btn_size" format="dimension" />
+        <attr name="etv_btn_top" format="dimension" />
+        <attr name="etv_max_line" format="integer" />
+        <attr name="etv_open_text" format="string" />
+        <attr name="etv_shut_text" format="string" />
+    </declare-styleable>
+</resources>
