@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/id_treenode_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="这是标题"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <com.sam.lib.etv.ExpandTextView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/xtv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical"
+        app:etv_btn_color="@color/colorPrimary"
+        app:etv_btn_top="0dp"
+        app:etv_shut_text="全文" />
+
+
+</LinearLayout>

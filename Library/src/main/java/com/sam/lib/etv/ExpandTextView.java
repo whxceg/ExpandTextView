@@ -86,16 +86,16 @@ public class ExpandTextView extends LinearLayout {
         mController.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (mBean.getState()) {
+                switch (mBean.getIWrapState()) {
                     case STATE_SHUT:
-                        mBean.setState(STATE_OPEN);
+                        mBean.setIWrapState(STATE_OPEN);
                         if (mListener != null) {
                             mListener.onExpandClick(mBean);
                         }
                         drawText();
                         break;
                     case STATE_OPEN:
-                        mBean.setState(STATE_SHUT);
+                        mBean.setIWrapState(STATE_SHUT);
                         if (mListener != null) {
                             mListener.onExpandClick(mBean);
                         }
@@ -121,7 +121,7 @@ public class ExpandTextView extends LinearLayout {
     }
 
     private void drawText() {
-        switch (mBean.getState()) {
+        switch (mBean.getIWrapState()) {
             case STATE_INIT:
                 initDraw();
                 break;
@@ -146,10 +146,10 @@ public class ExpandTextView extends LinearLayout {
                     mContent.setMaxLines(mMaxLine);
                     mController.setVisibility(VISIBLE);
                     mController.setText(mShut);
-                    mBean.setState(STATE_SHUT);
+                    mBean.setIWrapState(STATE_SHUT);
                 } else {
                     mController.setVisibility(GONE);
-                    mBean.setState(STATE_DRAW);
+                    mBean.setIWrapState(STATE_DRAW);
                 }
                 mContent.getViewTreeObserver().removeOnPreDrawListener(this);
                 return true;
@@ -194,9 +194,9 @@ public class ExpandTextView extends LinearLayout {
 
         String getIWrapText();
 
-        int getState();
+        int getIWrapState();
 
-        void setState(@State int state);
+        void setIWrapState(@State int state);
     }
 
     public static class WrapBean<T> implements IWrap {
@@ -217,12 +217,12 @@ public class ExpandTextView extends LinearLayout {
         }
 
         @Override
-        public int getState() {
+        public int getIWrapState() {
             return state;
         }
 
         @Override
-        public void setState(int state) {
+        public void setIWrapState(int state) {
             this.state = state;
         }
 
