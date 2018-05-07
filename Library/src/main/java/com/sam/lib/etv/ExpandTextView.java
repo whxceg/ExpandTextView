@@ -156,23 +156,23 @@ public class ExpandTextView extends LinearLayout {
             }
         });
         mContent.setMaxLines(Integer.MAX_VALUE);
-        mContent.setText(mBean.getContnet());
+        mContent.setText(mBean.getIWrapText());
     }
 
     private void normalDraw() {
         mController.setVisibility(View.GONE);
-        mContent.setText(mBean.getContnet());
+        mContent.setText(mBean.getIWrapText());
     }
 
     private void shutDraw() {
-        mContent.setText(mBean.getContnet());
+        mContent.setText(mBean.getIWrapText());
         mContent.setMaxLines(mMaxLine);
         mController.setVisibility(View.VISIBLE);
         mController.setText(mShut);
     }
 
     private void openDraw() {
-        mContent.setText(mBean.getContnet());
+        mContent.setText(mBean.getIWrapText());
         mContent.setMaxLines(Integer.MAX_VALUE);
         mController.setVisibility(View.VISIBLE);
         mController.setText(mOpen);
@@ -192,7 +192,7 @@ public class ExpandTextView extends LinearLayout {
 
         int mm = State.STATE_INIT;
 
-        String getContnet();
+        String getIWrapText();
 
         int getState();
 
@@ -203,17 +203,17 @@ public class ExpandTextView extends LinearLayout {
 
         @State
         private int state = STATE_INIT;
-        private String content;
+        private String text;
         private T data;
 
-        public WrapBean(String content, T data) {
-            this.content = content;
+        public WrapBean(String text, T data) {
+            this.text = text;
             this.data = data;
         }
 
         @Override
-        public String getContnet() {
-            return content;
+        public String getIWrapText() {
+            return text;
         }
 
         @Override
@@ -238,7 +238,7 @@ public class ExpandTextView extends LinearLayout {
         public String toString() {
             return "WrapBean{" +
                     "state=" + state +
-                    ", content='" + content + '\'' +
+                    ", text='" + text + '\'' +
                     ", data=" + data +
                     '}';
         }
