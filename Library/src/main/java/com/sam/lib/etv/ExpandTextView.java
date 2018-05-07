@@ -74,8 +74,8 @@ public class ExpandTextView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mContent = findViewById(R.id.list_item_etv_content);
-        mController = findViewById(R.id.list_item_etv_controller);
+        mContent = (TextView) findViewById(R.id.list_item_etv_content);
+        mController = (TextView) findViewById(R.id.list_item_etv_controller);
 
         mContent.setTextColor(mTextColor);
         mContent.setTextSize(mTextSize);
